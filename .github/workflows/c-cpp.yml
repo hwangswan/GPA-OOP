@@ -34,7 +34,7 @@ jobs:
 
     - name: make (with test coverage)
       run: make gcov
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request_target' }}
 
     - name: make - copy test into testing folder
       run: make init_test
@@ -45,13 +45,13 @@ jobs:
     - name: make - init code coverage
       run: |
         sudo apt-get install -y lcov && make lcov
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request_target' }}
 
     - name: upload code coverage report
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
         lcov-file: coverage.info
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request_target' }}
 
     - name: cleaning afterworks
       run: make clean
